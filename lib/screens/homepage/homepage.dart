@@ -1,72 +1,152 @@
 
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:adminapp/screens/entering/entering.dart';
+import 'package:adminapp/screens/leave_form/leave_form.dart';
+import 'package:adminapp/screens/leaving/leaving.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-class HomePage extends StatelessWidget {
 
 
-  final Stream<QuerySnapshot> users =
-  FirebaseFirestore.instance.collection("request").snapshots();
+class HomePage extends StatefulWidget {
+
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Admin App"),
+        title: Text(
+          "EMPLOYEE DETAILS",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 500,
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: StreamBuilder<QuerySnapshot>(
-                  stream: users,
-                  builder: (
-                      BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot,
-                      ) {
-                    if(snapshot.hasError){
-                      return Text("Something wrong");
-                    }
-                    if(snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
-                    final data = snapshot.requireData;
-
-                    return ListView.builder(
-
-                      itemCount: data.size,
-                      itemBuilder: (context, index) {
-                        return Column(
-
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-
-                            Text("Date : ${data.docs[index]["date"].toString()}"),
-
-                        Text("Day Type: ${data.docs[index]["day"].toString()}"),
-                        Text( "Leave Type: ${data.docs[index]["leave"].toString()}"),
-                            Text( "Reason: ${data.docs[index]["reason"].toString()}"),
-                          ],
-
-                        );
-
-                      },
-
-                    );
-                  }
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Container(
+                height: 50,
+                width: 250,
+                child:  ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(
+                          color: Colors.teal,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: Text('ENTERING',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => Entering()));
+                  },
+                ),
               ),
+
             ),
-          ],
-        ),
+          ),
+
+          SizedBox(
+            height: 20,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Container(
+                height: 50,
+                width: 250,
+                child:  ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(
+                          color: Colors.teal,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: Text('LEAVING',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => Leaving()));
+                  },
+                ),
+              ),
+
+            ),
+          ),
+
+          SizedBox(
+            height: 20,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Container(
+                height: 50,
+                width: 250,
+                child:  ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(
+                          color: Colors.teal,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: Text('LEAVE REQUESTS',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => LeaveForm()));
+                  },
+                ),
+              ),
+
+            ),
+          ),
+
+          SizedBox(
+            height: 50,
+          ),
+
+
+        ],
+
       ),
     );
   }
